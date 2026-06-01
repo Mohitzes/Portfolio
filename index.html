@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOHITO | Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            background: linear-gradient(-45deg, #020204, #050b14, #03120e, #020204);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 255, 170, 0.2);
+            border: 1px solid #00ffaa;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s ease;
+            z-index: 9999;
+            box-shadow: 0 0 20px #00ffaa, inset 0 0 10px #00ffaa;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 170, 0.2) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .p1 { width: 300px; height: 300px; top: 10%; left: 5%; animation: floatSlow 12s ease-in-out infinite alternate; }
+        .p2 { width: 400px; height: 400px; bottom: 15%; right: 5%; animation: floatSlow 18s ease-in-out infinite alternate-reverse; }
+        .p3 { width: 250px; height: 250px; top: 60%; left: 50%; animation: floatSlow 14s ease-in-out infinite alternate; }
+
+        @keyframes floatSlow {
+            0% { transform: translateY(0) scale(1) translate(0, 0); }
+            50% { transform: translateY(-30px) scale(1.05) translate(20px, -20px); }
+            100% { transform: translateY(30px) scale(0.95) translate(-20px, 20px); }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            background: rgba(5, 5, 10, 0.4);
+            border: 1px solid rgba(0, 255, 170, 0.15);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 32px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            z-index: 10;
+            margin-top: auto;
+            margin-bottom: auto;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .nickname {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 8px;
+            background: linear-gradient(45deg, #00ffaa, #00e5ff, #00ffaa);
+            background-size: 200% center;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            animation: shineText 5s linear infinite;
+            filter: drop-shadow(0 0 30px rgba(0, 255, 170, 0.25));
+        }
+
+        @keyframes shineText {
+            to { background-position: 200% center; }
+        }
+
+        h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #00ffaa;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
+        }
+
+        .about-text {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 45px auto;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 55px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px;
+            height: 55px;
+            background: rgba(0, 255, 170, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            color: #ffffff;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .social-icon:hover {
+            color: #00ffaa;
+            border-color: #00ffaa;
+            background: rgba(0, 255, 170, 0.08);
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 255, 170, 0.25);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            text-align: left;
+        }
+
+        @media (max-width: 700px) {
+            .projects-grid { grid-template-columns: 1fr; }
+            .nickname { font-size: 3.2rem; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.005);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            background: rgba(0, 255, 170, 0.015);
+            border-color: #00ffaa;
+            box-shadow: 0 20px 40px rgba(0, 255, 170, 0.12);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #00ffaa;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        footer {
+            padding: 30px;
+            color: #475569;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            z-index: 10;
+            font-weight: 400;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-follower" id="follower"></div>
+
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+
+    <div class="container">
+        <div class="nickname">MOHITO</div>
+        <h1>Digital Cyber Architect</h1>
+        
+        <p class="about-text">
+            Designing cutting-edge backend environments and seamless automations. Specializing in highly secure async Telegram ecosystems, professional data scraping tools, and advanced technical engineering.
+        </p>
+        
+        <div class="social-links">
+            <a href="https://github.com/Mohitzes" target="_blank" class="social-icon" title="GitHub">
+                <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+
+            <a href="https://t.me/mohitze" target="_blank" class="social-icon" title="Telegram Portfolio">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.58.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.53-1.39.52-.46-.01-1.33-.26-1.98-.48-.8-.26-1.43-.4-1.38-.85.03-.23.34-.47.95-.71 3.71-1.62 6.19-2.69 7.42-3.21 3.52-1.48 4.25-1.74 4.73-1.75.11 0 .35.03.5.15.12.1.15.24.16.34.01.06.02.21.01.35z"/></svg>
+            </a>
+
+            <a href="https://laborx.com/freelancers/users/id447932" target="_blank" class="social-icon" title="Order Services">
+                <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+            </a>
+        </div>
+        
+        <div class="projects-grid">
+            <a href="https://github.com/Mohitzes/Telegram-business-bot" target="_blank" class="card">
+                <h3>💼 Business Bot Core</h3>
+                <p>Modular asynchronous backend designed for process automation, state-machine tracking, and custom business analytics metrics.</p>
+            </a>
+            
+            <a href="https://github.com/Mohitzes/Smart-reader-bot" target="_blank" class="card">
+                <h3>🤖 Smart Reader Bot</h3>
+                <p>Advanced data extraction engine featuring web simulation, custom request headers bypass, and raw HTML content filtration.</p>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        Made with 💚 by MOHITO
+    </footer>
+
+    <script>
+        const follower = document.getElementById('follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            follower.style.left = e.clientX + 'px';
+            follower.style.top = e.clientY + 'px';
+        });
+
+        const links = document.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                follower.style.transform = 'translate(-50%, -50%) scale(2)';
+                follower.style.background = 'rgba(0, 255, 170, 0.05)';
+            });
+            link.addEventListener('mouseleave', () => {
+                follower.style.transform = 'translate(-50%, -50%) scale(1)';
+                follower.style.background = 'rgba(0, 255, 170, 0.2)';
+            });
+        });
+    </script>
+
+</body>
+</html>
